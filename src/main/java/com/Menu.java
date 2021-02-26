@@ -20,7 +20,7 @@ public class Menu {
         address = GetData.getStringValue();
         System.out.print("Enter city : ");
         city = GetData.getStringValue();
-        System.out.print("Enter zipCode : ");
+        System.out.print("Enter zip : ");
         zipCode = GetData.getStringValue();
         System.out.print("Enter state : ");
         state = GetData.getStringValue();
@@ -30,12 +30,18 @@ public class Menu {
 
     public void display()
     {
-        for(Person person: PERSON)
+        if (PERSON.isEmpty())
         {
-            System.out.println(person);
+            System.out.println("No Records!!!");
+        }
+        else {
+            for (Person person : PERSON) {
+                System.out.println(person);
+            }
         }
 
     }
+
     public void editPerson()
     {
         int id,choice = 0, i=0;
@@ -44,7 +50,7 @@ public class Menu {
         {
             System.out.println("ID: #"+PERSON.indexOf(person)+" : "+person);
         }
-        System.out.print("\nEnter ID to Edit Contact : ");
+        System.out.print("\nEnter #ID to Edit Contact : ");
         id = GetData.getIntValue();
         System.out.println(PERSON.get(id));
         while(i==0) {
@@ -58,7 +64,7 @@ public class Menu {
             choice = GetData.getIntValue();
             switch (choice) {
                 case 1:
-                    System.out.print("Enter new Street : ");
+                    System.out.print("Enter new Address : ");
                     address = GetData.getStringValue();
                     PERSON.get(id).setAddress(address);
                     break;
@@ -92,11 +98,12 @@ public class Menu {
         }
     }
 
-    public void delete() {
+    public void delete()
+    {
         int id;
         for(Person p: PERSON)
         {
-            System.out.println("ID: "+PERSON.indexOf(p)+" : "+p);
+            System.out.println("ID: #"+PERSON.indexOf(p)+" : "+p);
         }
         System.out.print("\nEnter #ID to delete Contact : ");
         id = GetData.getIntValue();
