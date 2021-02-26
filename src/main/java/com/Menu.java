@@ -1,17 +1,24 @@
 package com;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Menu {
     List<Person> PERSON = new ArrayList<Person>();
 
     public void addPerson()
     {
-        final String firstName, lastName, address, city, state, phoneNumber,zipCode;
-
-        System.out.print("Enter First Name : ");
-        firstName = GetData.getStringValue();
+        int i=0;
+        String firstName = null;
+        final String lastName, address, city, state, phoneNumber,zipCode;
+        while(i==0) {
+            System.out.print("Enter First Name : ");
+            firstName = GetData.getStringValue();
+            if (checkExists(firstName)) {
+                System.out.println("Person Name Already Exists!!\nPlease enter different name...");
+            }
+            else {
+                i=1;
+            }
+        }
         System.out.print("Enter Last Name : ");
         lastName = GetData.getStringValue();
         System.out.print("Enter Phone Number : ");
@@ -27,7 +34,6 @@ public class Menu {
 
         PERSON.add(new Person(firstName,lastName,address,city,state,phoneNumber,zipCode));
     }
-
     public void display()
     {
         if (PERSON.isEmpty())
@@ -41,7 +47,6 @@ public class Menu {
         }
 
     }
-
     public void editPerson()
     {
         int id,choice = 0, i=0;
@@ -97,7 +102,6 @@ public class Menu {
             System.out.println(PERSON.get(id));
         }
     }
-
     public void delete()
     {
         int id;
@@ -108,5 +112,22 @@ public class Menu {
         System.out.print("\nEnter #ID to delete Contact : ");
         id = GetData.getIntValue();
         PERSON.remove(id);
+    }
+    public boolean checkExists(String firstName)
+    {
+        int flag=0;
+        for (Person p: PERSON)
+        {
+            if (p.getFirstName().equals(firstName))
+            {
+                flag=1;
+                break;
+            }
+        }
+        if (flag==1)
+        {
+            return true;
+        }
+        return false;
     }
 }

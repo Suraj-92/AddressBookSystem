@@ -32,7 +32,6 @@ public class AddressBook {
                     break;
                 case 5 :
                     i=1;
-                    break;
                 default :
                     System.out.println("Please Enter Valid Option!!!");
             }
