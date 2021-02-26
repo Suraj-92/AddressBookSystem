@@ -9,8 +9,9 @@ public class AddressBook {
             System.out.println("--- Address Book Management ---\n");
             System.out.println("\t--MENU--");
             System.out.println("1: Add New Person      ");
-            System.out.println("2: Display Records     ");
-            System.out.println("3: Exit		       \n");
+            System.out.println("2: Edit Person     ");
+            System.out.println("3: Display.....    ");
+            System.out.println("4: Exit		       \n");
 			System.out.println(" -----------------------");
             System.out.println("--- Enter Your Choice ---");
             choice = GetData.getIntValue();
@@ -20,9 +21,12 @@ public class AddressBook {
                     menu.addPerson();
                     break;
                 case 2 :
-                    menu.display();
+                    menu.editPerson();
                     break;
                 case 3 :
+                    menu.display();
+                    break;
+                case 4 :
                     i=1;
                     break;
                 default :
