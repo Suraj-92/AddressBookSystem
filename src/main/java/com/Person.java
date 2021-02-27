@@ -3,7 +3,6 @@ package com;
 import java.util.Comparator;
 
 public class Person {
-
     public static Comparator<Person> firstNameSorting = (p1, p2) -> {
         String firstName = p1.getFirstName();
         String firstName2 = p2.getFirstName();
@@ -23,8 +22,8 @@ public class Person {
     };
 
     public static Comparator<Person> zipSorting = (p1, p2) -> {
-        String zipCode1 = p1.getZipCode();
-        String zipCode2 = p2.getZipCode();
+        String zipCode1 = p1.getZip();
+        String zipCode2 = p2.getZip();
         return zipCode1.compareToIgnoreCase(zipCode2);
     };
     private final String firstName;
@@ -73,8 +72,8 @@ public class Person {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getZipCode() {
-        return getZipCode();
+    public String getZip() {
+        return zipCode;
     }
 
     public void setZip(String zipCode) {

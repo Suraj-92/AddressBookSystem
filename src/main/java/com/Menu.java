@@ -1,8 +1,72 @@
 package com;
 import java.util.*;
 
-public class Menu {
+public class Menu implements IMenu {
     List<Person> personList = new ArrayList<>();
+
+    public static void searchByCity(List<Person> person) {
+        String search;
+        List<Person> matches = new ArrayList<>();
+        System.out.println("Enter First Name to search : ");
+        search = GetData.getStringValue();
+        int flag = 0;
+        for (Person p : person) {
+            if (p.getCity().equalsIgnoreCase(search)) {
+                flag = 1;
+                matches.add(p);
+            }
+        }
+        if (flag == 1) {
+            System.out.println("...Match Found...");
+            for (Person p : matches) {
+                System.out.println(p);
+            }
+        } else {
+            System.out.println("Match Not Found!!!");
+        }
+    }
+
+    public static void searchByState(List<Person> person) {
+        String search;
+        int flag = 0;
+        List<Person> matches = new ArrayList<>();
+        System.out.println("Enter First Name to search : ");
+        search = GetData.getStringValue();
+        for (Person p : person) {
+            if (p.getState().equalsIgnoreCase(search)) {
+                flag = 1;
+                matches.add(p);
+            }
+        }
+        if (flag == 1) {
+            System.out.println("...Match Found...");
+            for (Person p : matches) {
+                System.out.println(p);
+            }
+        } else {
+            System.out.println("Match Not Found!!!");
+        }
+    }
+
+    public static void sortByName(List<Person> person) {
+        person.sort(Person.firstNameSorting);
+        person.forEach(System.out::println);
+    }
+
+    public static void sortByCity(List<Person> person) {
+        person.sort(Person.citySorting);
+        person.forEach(System.out::println);
+    }
+
+    public static void sortByState(List<Person> person) {
+        person.sort(Person.stateSorting);
+        person.forEach(System.out::println);
+    }
+
+    public static void sortByZipCode(List<Person> person) {
+        person.sort(Person.zipSorting);
+        person.forEach(System.out::println);
+    }
 
     public void addPerson() {
         int i = 0;
@@ -130,16 +194,16 @@ public class Menu {
         int choice = GetData.getIntValue();
         switch (choice) {
             case 1:
-                Sort.sortByName(personList);
+                sortByName(personList);
                 break;
             case 2:
-                Sort.sortByCity(personList);
+                sortByCity(personList);
                 break;
             case 3:
-                Sort.sortByState(personList);
+                sortByState(personList);
                 break;
             case 4:
-                Sort.sortByZipCode(personList);
+                sortByZipCode(personList);
                 break;
             case 5:
                 return;
@@ -163,10 +227,10 @@ public class Menu {
             int choice = GetData.getIntValue();
             switch (choice) {
                 case 1:
-                    Sort.searchByCity(personList);
+                    searchByCity(personList);
                     break;
                 case 2:
-                    Sort.searchByState(personList);
+                    searchByState(personList);
                     break;
                 case 3:
                     i = 1;
