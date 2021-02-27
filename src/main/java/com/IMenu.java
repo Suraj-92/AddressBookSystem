@@ -1,19 +1,20 @@
 package com;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public interface IMenu {
-    LinkedList<Person> addPerson(LinkedList<Person> personList);
+    List<Person> addPerson(List<Person> personList);
 
-    LinkedList<Person> editPerson(LinkedList<Person> person) throws AddressBookException;
+    List<Person> editPerson(List<Person> person) throws AddressBookException;
 
-    void display(LinkedList<Person> person);
+    void display(List<Person> person);
 
-    LinkedList<Person> delete(LinkedList<Person> personList) throws AddressBookException;
+    List<Person> delete(List<Person> personList) throws AddressBookException;
 
-    void sortRecords(LinkedList<Person> person);
+    void sortRecords(List<Person> personList);
 
-    void searchInRecords(LinkedList<Person> person);
+    void searchInRecords(List<Person> person);
 
-    boolean checkExists(String firstName, LinkedList<Person> person);
+    boolean checkExists(String firstName, List<Person> person);
 }

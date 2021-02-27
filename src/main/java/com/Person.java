@@ -33,6 +33,7 @@ public class Person {
         return phone;
     }
 
+    /*Getter & Setter Methods*/
     public void setPhone(String phone) {
         this.phone = phone;
     }

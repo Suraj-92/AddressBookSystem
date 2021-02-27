@@ -2,19 +2,21 @@ package com;
 
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
 
 public class AddressBook {
     public static void main(String[] args) throws AddressBookException, IOException {
         final String JSON_SIMPLE_FILE_PATH = "src/main/resources/JSonSimpleAddressBook.json";
         final String OPEN_CSV_FILE_PATH = "src/main/resources/CSVAddressBook.csv";
-        final int jsonSampleOperation = 1, openCSVOperation = 2;
+        final String GSON_JSON_FILE_PATH = "src/main/resources/gsonJSONAddressBook.json";
+        final int jsonSampleOperation = 1, openCSVOperation = 2, gsonOperation = 3;
         int operations = 0, flag = 0;
         String filePath = null;
-        LinkedList<Person> personList;
+        List<Person> personList;
         FileOperations fileOperations = new FileOperations();
-        final Menu addressBookService = new Menu();
+        final Menu menu = new Menu();
 
-        System.out.println("Select Below Operations:\n1. JSON SAMPLE\n2. OPEN CSV \n");
+        System.out.println("Select Below Operations:\n1. Using JSON SAMPLE\n2. Using OPEN CSV\n3. Using GSON \n");
         int option = GetData.getIntValue();
         switch (option) {
             case 1:
@@ -24,6 +26,10 @@ public class AddressBook {
             case 2:
                 filePath = OPEN_CSV_FILE_PATH;
                 operations = openCSVOperation;
+                break;
+            case 3:
+                filePath = GSON_JSON_FILE_PATH;
+                operations = gsonOperation;
                 break;
         }
         while (flag == 0) {
@@ -41,31 +47,31 @@ public class AddressBook {
             switch (choice) {
                 case 1:
                     personList = fileOperations.getDataInList(filePath, operations);
-                    personList = addressBookService.addPerson(personList);
+                    personList = menu.addPerson(personList);
                     fileOperations.convertToFile(personList, filePath, operations);
                     break;
                 case 2:
-                    LinkedList<Person> person = fileOperations.getDataInList(filePath, operations);
-                    addressBookService.display(person);
+                    List<Person> person = fileOperations.getDataInList(filePath, operations);
+                    menu.display(person);
                     break;
                 case 3:
                     personList = fileOperations.getDataInList(filePath, operations);
-                    personList = addressBookService.editPerson(personList);
+                    personList = menu.editPerson(personList);
                     fileOperations.convertToFile(personList, filePath, operations);
 
                     break;
                 case 4:
                     personList = fileOperations.getDataInList(filePath, operations);
-                    personList = addressBookService.delete(personList);
+                    personList = menu.delete(personList);
                     fileOperations.convertToFile(personList, filePath, operations);
                     break;
                 case 5:
                     personList = fileOperations.getDataInList(filePath, operations);
-                    addressBookService.sortRecords(personList);
+                    menu.sortRecords(personList);
                     break;
                 case 6:
                     personList = fileOperations.getDataInList(filePath, operations);
-                    addressBookService.searchInRecords(personList);
+                    menu.searchInRecords(personList);
                     break;
                 case 7:
                     flag = 1;

@@ -58,7 +58,7 @@ public class Menu implements IMenu {
         person.stream().sorted(sortOptions.comparator).forEach(System.out::println);
     }
 
-    public LinkedList<Person> addPerson(LinkedList<Person> personList) {
+    public List<Person> addPerson(List<Person> personList) {
         int flag = 0;
         String firstName = null;
         final String lastName, address, city, state, phone, zip;
@@ -88,7 +88,7 @@ public class Menu implements IMenu {
         return personList;
     }
 
-    public void display(LinkedList<Person> person) {
+    public void display(List<Person> person) {
         if (person.isEmpty()) {
             System.out.println("No Records To Display!!!");
         } else {
@@ -96,7 +96,7 @@ public class Menu implements IMenu {
         }
     }
 
-    public LinkedList<Person> editPerson(LinkedList<Person> person) throws AddressBookException {
+    public List<Person> editPerson(List<Person> person) throws AddressBookException {
         int id, flag = 0;
         String address, city, state, phone, zip;
         try {
@@ -159,7 +159,8 @@ public class Menu implements IMenu {
         }
         return person;
     }
-    public LinkedList<Person> delete(LinkedList<Person> personList) throws AddressBookException {
+
+    public List<Person> delete(List<Person> personList) throws AddressBookException {
         try {
             int id;
             if (personList.isEmpty()) {
@@ -178,7 +179,7 @@ public class Menu implements IMenu {
         return personList;
     }
 
-    public void sortRecords(LinkedList<Person> personList) {
+    public void sortRecords(List<Person> personList) {
         System.out.println("Sort By...\n"
                 + "1: First Name\n"
                 + "2: City\n"
@@ -206,13 +207,13 @@ public class Menu implements IMenu {
         }
     }
 
-    public boolean checkExists(String firstName, LinkedList<Person> person) {
+    public boolean checkExists(String firstName, List<Person> person) {
         int flag = person.stream()
                 .anyMatch(p -> p.getFirstName().equalsIgnoreCase(firstName)) ? 1 : 0;
         return flag == 1;
     }
 
-    public void searchInRecords(LinkedList<Person> person) {
+    public void searchInRecords(List<Person> person) {
         int flag = 0;
         while (flag == 0) {
             System.out.println("1. Search By City\n" +

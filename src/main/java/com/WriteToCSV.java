@@ -64,7 +64,8 @@ public class WriteToCSV {
         {
             System.out.println("Writing CSV error!!!");
             e.printStackTrace();
-        } finally
+        }
+        finally
         {
             try
             {
