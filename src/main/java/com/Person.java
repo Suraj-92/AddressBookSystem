@@ -2,9 +2,38 @@ package com;
 
 import java.util.Comparator;
 
-public class Person
-{
-    private String firstName, lastName, address, city, state, phoneNumber,zipCode;
+public class Person {
+
+    public static Comparator<Person> firstNameSorting = (p1, p2) -> {
+        String firstName = p1.getFirstName();
+        String firstName2 = p2.getFirstName();
+        return firstName.compareToIgnoreCase(firstName2);
+    };
+
+    public static Comparator<Person> citySorting = (p1, p2) -> {
+        String city1 = p1.getCity();
+        String city2 = p2.getCity();
+        return city1.compareToIgnoreCase(city2);
+    };
+
+    public static Comparator<Person> stateSorting = (p1, p2) -> {
+        String state1 = p1.getState();
+        String state2 = p2.getState();
+        return state1.compareToIgnoreCase(state2);
+    };
+
+    public static Comparator<Person> zipSorting = (p1, p2) -> {
+        String zipCode1 = p1.getZip();
+        String zipCode2 = p2.getZip();
+        return zipCode1.compareToIgnoreCase(zipCode2);
+    };
+    private final String firstName;
+    private final String lastName;
+    private String address;
+    private String city;
+    private String state;
+    private String phoneNumber;
+    private String zipCode;
 
     public Person(String firstName, String lastName, String address, String city, String state, String phoneNumber, String zipCode) {
         this.firstName = firstName;
@@ -20,20 +49,12 @@ public class Person
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getAddress() {
-        return address;
+    public String getPhone() {
+        return phoneNumber;
     }
 
     public void setAddress(String address) {
@@ -56,75 +77,26 @@ public class Person
         this.state = state;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhone(String phone) {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getZipCode() {
-        return zipCode;
+    public String getZip() { return zipCode; }
+
+    public void setZip(String zip) {
+        this.zipCode = zip;
     }
-
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
-
-
-    public static Comparator<Person> firstNameSorting = new Comparator<Person>() {
-        @Override
-        public int compare(Person p1, Person p2)
-        {
-            String firstName1 = p1.getFirstName();
-            String firstName2 = p2.getFirstName();
-            return firstName1.compareToIgnoreCase(firstName2);
-        }
-    };
-
-    public static Comparator<Person> citySorting = new Comparator<Person>() {
-        @Override
-        public int compare(Person p1, Person p2)
-        {
-            String city1 = p1.getCity();
-            String city2 = p2.getCity();
-
-            return city1.compareToIgnoreCase(city2);
-        }
-    };
-
-    public static Comparator<Person> stateSorting = new Comparator<Person>() {
-        @Override
-        public int compare(Person p1, Person p2)
-        {
-            String state1 = p1.getState();
-            String state2 = p2.getState();
-            // ascending order
-            return state1.compareToIgnoreCase(state2);
-        }
-    };
-    public static Comparator<Person> zipSorting = new Comparator<Person>() {
-        @Override
-        public int compare(Person p1, Person p2)
-        {
-            String zipCode1 = p1.getZipCode();
-            String zipCode2 = p2.getZipCode();
-
-            return zipCode1.compareToIgnoreCase(zipCode2);
-        }
-    };
 
     @Override
     public String toString() {
         return "Person{" +
-                "fname='" + firstName + '\'' +
-                ", lname='" + lastName + '\'' +
-                ", address='" + address + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", phone='" + phoneNumber + '\'' +
-                ", zip='" + zipCode + '\'' +
+                "First Name ='" + firstName + '\'' +
+                ", Last Name ='" + lastName + '\'' +
+                ", Address ='" + address + '\'' +
+                ", City ='" + city + '\'' +
+                ", State ='" + state + '\'' +
+                ", Phone ='" + phoneNumber + '\'' +
+                ", Zip ='" + zipCode + '\'' +
                 '}';
     }
 }
