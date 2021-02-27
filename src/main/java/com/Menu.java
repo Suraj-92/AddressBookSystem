@@ -6,13 +6,11 @@ import org.json.simple.JSONObject;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Menu implements IMenu {
-    private final List<Person> personList = new ArrayList<>();
-
-    JSONArray personArray = new JSONArray();
-        public static void searchByCity(List<Person> person) {
+    public static void searchByCity(List<Person> person) {
         String search;
         List<Person> matches = new ArrayList<>();
         System.out.println("Enter First Name to search : ");
@@ -56,92 +54,62 @@ public class Menu implements IMenu {
         }
     }
 
-    public static void sortByName(List<Person> person) {
-        person.sort(Person.firstNameSorting);
-        person.forEach(System.out::println);
+    public static void sortData(List<Person> person, sortOptions sortOptions) {
+        person.stream().sorted(sortOptions.comparator).forEach(System.out::println);
     }
 
-    public static void sortByCity(List<Person> person) {
-        person.sort(Person.citySorting);
-        person.forEach(System.out::println);
-    }
-
-    public static void sortByState(List<Person> person) {
-        person.sort(Person.stateSorting);
-        person.forEach(System.out::println);
-    }
-
-    public static void sortByZip(List<Person> person) {
-        person.sort(Person.zipSorting);
-        person.forEach(System.out::println);
-    }
-
-    public void addPerson() {
-        int i = 0;
+    public LinkedList<Person> addPerson(LinkedList<Person> personList) {
+        int flag = 0;
         String firstName = null;
-        final String lastName, address, city, state, phoneNumber, zipCode;
-        while (i == 0) {
+        final String lastName, address, city, state, phone, zip;
+        while (flag == 0) {
             System.out.print("Enter First Name : ");
             firstName = GetData.getStringValue();
-            if (checkExists(firstName)) {
+            if (checkExists(firstName, personList)) {
                 System.out.println("Person Name Already Exists!!\nPlease enter different name...");
             } else {
-                i = 1;
+                flag = 1;
             }
         }
         System.out.print("Enter Last Name : ");
         lastName = GetData.getStringValue();
         System.out.print("Enter Phone Number : ");
-        phoneNumber = GetData.getStringValue();
+        phone = GetData.getStringValue();
         System.out.print("Enter Address : ");
         address = GetData.getStringValue();
         System.out.print("Enter city : ");
         city = GetData.getStringValue();
         System.out.print("Enter zip : ");
-        zipCode = GetData.getStringValue();
+        zip = GetData.getStringValue();
         System.out.print("Enter state : ");
         state = GetData.getStringValue();
-        Person person = new Person(firstName, lastName, address, city, state, phoneNumber, zipCode);
+        Person person = new Person(firstName, lastName, address, city, state, zip, phone);
         personList.add(person);
-        this.writeToJSONFile(person);
+        return personList;
     }
 
-    private void writeToJSONFile(Person person) {
-        JSONObject personDetails = new JSONObject();
-        personDetails.put("first Name",person.getFirstName());
-        personDetails.put("last Name",person.getLastName());
-        personDetails.put("Phone",person.getPhone());
-        personArray.add(personDetails);
-        try (FileWriter file = new FileWriter("PersonDetails.json")) {
-            file.write(personArray.toJSONString());
-            file.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void display() {
-        if (personList.isEmpty()) {
+    public void display(LinkedList<Person> person) {
+        if (person.isEmpty()) {
             System.out.println("No Records To Display!!!");
         } else {
-            personList.forEach(System.out::println);
+            person.forEach(System.out::println);
         }
     }
 
-    public void editPerson() throws AddressBookException {
-        int id, i = 0;
-        String address, city, state, phoneNumber, zipCode;
+    public LinkedList<Person> editPerson(LinkedList<Person> person) throws AddressBookException {
+        int id, flag = 0;
+        String address, city, state, phone, zip;
         try {
-            if (personList.isEmpty()) {
+            if (person.isEmpty()) {
                 System.out.println("No Records To Edit!!!");
             } else {
-                for (Person person : personList) {
-                    System.out.println("ID: #" + personList.indexOf(person) + " : " + person);
+                for (Person person1 : person) {
+                    System.out.println("ID: #" + person.indexOf(person1) + " : " + person1);
                 }
                 System.out.print("\nEnter #ID to Edit Contact : ");
                 id = GetData.getIntValue();
-                System.out.println(personList.get(id));
-                while (i == 0) {
+                System.out.println(person.get(id));
+                while (flag == 0) {
                     System.out.println("What You Want to edit...\n"
                             + "\t1: Address\n"
                             + "\t2: city\n"
@@ -154,43 +122,44 @@ public class Menu implements IMenu {
                         case 1:
                             System.out.print("Enter new Address : ");
                             address = GetData.getStringValue();
-                            personList.get(id).setAddress(address);
+                            person.get(id).setAddress(address);
                             break;
                         case 2:
                             System.out.print("Enter new City : ");
                             city = GetData.getStringValue();
-                            personList.get(id).setCity(city);
+                            person.get(id).setCity(city);
                             break;
                         case 3:
                             System.out.print("Enter new State : ");
                             state = GetData.getStringValue();
-                            personList.get(id).setState(state);
+                            person.get(id).setState(state);
                             break;
                         case 4:
                             System.out.print("Enter new Phone : ");
-                            phoneNumber = GetData.getStringValue();
-                            personList.get(id).setPhone(phoneNumber);
+                            phone = GetData.getStringValue();
+                            person.get(id).setPhone(phone);
                             break;
                         case 5:
                             System.out.print("Enter new Zip Code : ");
-                            zipCode = GetData.getStringValue();
-                            personList.get(id).setZip(zipCode);
+                            zip = GetData.getStringValue();
+                            person.get(id).setZip(zip);
                             break;
                         case 6:
-                            i = 1;
+                            flag = 1;
                             break;
                         default:
                             System.out.println("Please Enter Valid Option");
                     }
-                    System.out.println(personList.get(id));
+                    System.out.println(person.get(id));
                 }
             }
         } catch (IndexOutOfBoundsException e) {
-            throw new AddressBookException("Entered Wrong #ID", AddressBookException.exceptionType.ENTERED_WRONG_ID);
+            throw new AddressBookException("Entered Wrong #ID",
+                    AddressBookException.exceptionType.ENTERED_WRONG_ID);
         }
+        return person;
     }
-
-    public void delete() throws AddressBookException {
+    public LinkedList<Person> delete(LinkedList<Person> personList) throws AddressBookException {
         try {
             int id;
             if (personList.isEmpty()) {
@@ -200,13 +169,16 @@ public class Menu implements IMenu {
                 System.out.print("\nEnter #ID to delete Contact : ");
                 id = GetData.getIntValue();
                 personList.remove(id);
+                WriteToCSV.writeFromDelete(personList);
             }
         } catch (IndexOutOfBoundsException e) {
-            throw new AddressBookException("Entered Wrong #ID", AddressBookException.exceptionType.ENTERED_WRONG_ID);
+            throw new AddressBookException("Entered Wrong #ID",
+                    AddressBookException.exceptionType.ENTERED_WRONG_ID);
         }
+        return personList;
     }
 
-    public void sortRecords() {
+    public void sortRecords(LinkedList<Person> personList) {
         System.out.println("Sort By...\n"
                 + "1: First Name\n"
                 + "2: City\n"
@@ -216,16 +188,16 @@ public class Menu implements IMenu {
         int choice = GetData.getIntValue();
         switch (choice) {
             case 1:
-                sortByName(personList);
+                sortData(personList, sortOptions.NAME);
                 break;
             case 2:
-                sortByCity(personList);
+                sortData(personList, sortOptions.CITY);
                 break;
             case 3:
-                sortByState(personList);
+                sortData(personList, sortOptions.STATE);
                 break;
             case 4:
-                sortByZip(personList);
+                sortData(personList, sortOptions.ZIP);
                 break;
             case 5:
                 return;
@@ -234,14 +206,15 @@ public class Menu implements IMenu {
         }
     }
 
-    public boolean checkExists(String firstName) {
-        int flag = personList.stream().anyMatch(p -> p.getFirstName().equalsIgnoreCase(firstName)) ? 1 : 0;
+    public boolean checkExists(String firstName, LinkedList<Person> person) {
+        int flag = person.stream()
+                .anyMatch(p -> p.getFirstName().equalsIgnoreCase(firstName)) ? 1 : 0;
         return flag == 1;
     }
 
-    public void searchInRecords() {
-        int i = 0;
-        while (i == 0) {
+    public void searchInRecords(LinkedList<Person> person) {
+        int flag = 0;
+        while (flag == 0) {
             System.out.println("1. Search By City\n" +
                     "2. Search By State\n" +
                     "3. Back\n" +
@@ -249,13 +222,13 @@ public class Menu implements IMenu {
             int choice = GetData.getIntValue();
             switch (choice) {
                 case 1:
-                    searchByCity(personList);
+                    searchByCity(person);
                     break;
                 case 2:
-                    searchByState(personList);
+                    searchByState(person);
                     break;
                 case 3:
-                    i = 1;
+                    flag = 1;
                     break;
                 default:
                     System.out.println("Please Enter Correct Option...");
